@@ -15,6 +15,7 @@ Since the project was originally aimed to offer the possibility to a web applica
 
 <h3>Web Application Setup</h3>
 Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is almost the same as the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
+
 ``` gradle run ```
 
 After this step, you should be able to see “hello” on the page, when you type in http://localhost:8080/home
@@ -98,6 +99,7 @@ Let’s see the code on the python side.
 It is almost the same as on the Java side. 
 
 Receiver is:
+
 ``` python
 # receiver
 import pika
@@ -132,6 +134,7 @@ channel.start_consuming()
 ```
 
 Sender is:
+
 ``` python
 #sender
 
