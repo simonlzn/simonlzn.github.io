@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Hank Quinlan, Horrible Cop, Launches Site"
-date: 2014-04-30
+title: "Communication between different applications in different languages"
+date: 2015-11-10
 ---
 Communication between different applications in different languages
 
