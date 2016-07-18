@@ -15,7 +15,6 @@ Since the project was originally aimed to offer the possibility to a web applica
 
 <h3>Web Application Setup</h3>
 Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is almost the same as the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
-
 ``` gradle run ```
 
 After this step, you should be able to see “hello” on the page, when you type in http://localhost:8080/home
@@ -23,6 +22,7 @@ After this step, you should be able to see “hello” on the page, when you typ
 <h3>Messaging Setup</h3>
 Since I am using Spring as the IoC container, so the code looks like this.
 
+``` java
          @Configuration
          @ComponentScan("")
          public class RabbitMQConfig {
@@ -89,11 +89,70 @@ Since I am using Spring as the IoC container, so the code looks like this.
                  return new MessageListenerAdapter(messageQueue, "Recv");
          	}
          }
+```
+
 If you want to write everything in pure Java, just new all instances represented by each function.
 Here I have defined the ConnectionFactory to set up the connection between my application and the RabbitMQ server. Two exchanges are declared here, one for sending messages and one for receiving messages (the exchanges can be defined on both provider and consumer side, it would be safer to define them on both sides). A queue and its corresponding binding are also declared to receive messages (the same declaration policy as exchanges can be applied here). In the last part, a container and a listener are declared to define the logic for processing messages when they arrive. 
 
 Let’s see the code on the python side. 
 It is almost the same as on the Java side. 
+
+Receiver is:
+``` python
+# receiver
+import pika
+import time
+import json
+
+from send import *
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='queue3')
+
+print(' [*] Waiting for messages. To exit press CTRL+C')
+
+def callback(ch, method, properties, body):
+    print(" [x] Received %r" % body)
+    data = json.loads(body)
+    print data["func"]
+    print data["abc"]
+    time.sleep(5)
+    sender = Sender()
+    sender.send()
+
+channel.basic_consume(callback,
+                      queue='queue3',
+                      no_ack=True)
+
+channel.start_consuming()
+
+```
+
+Sender is:
+``` python
+#sender
+
+import pika
+
+class Sender(object):
+
+    def send(self):
+	connection = pika.BlockingConnection(pika.ConnectionParameters(
+        	host='localhost'))
+	channel = connection.channel()
+
+
+	channel.queue_declare(queue='queue1')
+
+	channel.basic_publish(exchange='',
+        	              routing_key='queue1',
+                	      body='test from python')
+	print(" [x] Sent 'test'")
+	connection.close()
+```
 
 <h3>Run it</h3>
 Now let’s run both the Java application and python application and see how they communicate with each other.
