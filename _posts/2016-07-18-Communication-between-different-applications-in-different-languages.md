@@ -15,12 +15,80 @@ Since the project was originally aimed to offer the possibility to a web applica
 
 <h3>Web Application Setup</h3>
 Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is almost the same as the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
-``` bash gradle run ```
+
+``` gradle run ```
 
 After this step, you should be able to see “hello” on the page, when you type in http://localhost:8080/home
 
 <h3>Messaging Setup</h3>
 Since I am using Spring as the IoC container, so the code looks like this.
+
+         @Configuration
+         @ComponentScan("")
+         public class RabbitMQConfig {
+             private String queueName = "queue." + UUID.randomUUID().toString().replace("-","");
+             @Bean
+             public ConnectionFactory connectionFactory() {
+                 CachingConnectionFactory connectionFactory =
+                     new CachingConnectionFactory();
+                 connectionFactory.setHost("localhost");
+                 connectionFactory.setUsername("guest");
+                 connectionFactory.setPassword("guest");
+                 return connectionFactory;
+             }
+         
+             @Bean
+             public AmqpAdmin amqpAdmin(TopicExchange topicExchange, FanoutExchange fanoutExchange, Queue queue, Binding binding) {
+                 RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
+                 rabbitAdmin.setAutoStartup(false);
+                 rabbitAdmin.declareQueue(queue);
+                 rabbitAdmin.declareExchange(topicExchange);
+                 rabbitAdmin.declareExchange(fanoutExchange);
+                 rabbitAdmin.declareBinding(binding);
+                 return rabbitAdmin;
+             }
+         
+             @Bean
+             public Binding binding() {
+                 return new Binding(queueName, Binding.DestinationType.QUEUE, "java", "queue1",null);
+             }
+         
+             @Bean
+             public Queue queue(){
+                 return new Queue(queueName, false, true, false);
+             }
+         
+             @Bean
+             public TopicExchange topicExchange(){
+                 return new TopicExchange("python");
+             }
+         
+             @Bean FanoutExchange fanoutExchange(){
+                 return new FanoutExchange("java");
+             }
+    
+             @Bean
+             public RabbitTemplate rabbitTemplate() {
+                 RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
+                 return rabbitTemplate;
+             }
+         
+             @Bean
+         	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, RabbitAdmin rabbitAdmin) throws IOException {
+         		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+                 container.setMissingQueuesFatal(false);
+                 container.setRabbitAdmin(rabbitAdmin);
+         		container.setConnectionFactory(connectionFactory);
+         		container.setQueueNames(queueName);
+         		container.setMessageListener(listenerAdapter);
+         		return container;
+         	}
+         
+         	@Bean
+         	MessageListenerAdapter listenerAdapter(MessageQueue messageQueue) {
+                 return new MessageListenerAdapter(messageQueue, "Recv");
+         	}
+         }
 If you want to write everything in pure Java, just new all instances represented by each function.
 Here I have defined the ConnectionFactory to set up the connection between my application and the RabbitMQ server. Two exchanges are declared here, one for sending messages and one for receiving messages (the exchanges can be defined on both provider and consumer side, it would be safer to define them on both sides). A queue and its corresponding binding are also declared to receive messages (the same declaration policy as exchanges can be applied here). In the last part, a container and a listener are declared to define the logic for processing messages when they arrive. 
 
