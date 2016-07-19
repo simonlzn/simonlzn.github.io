@@ -99,7 +99,7 @@ public class RabbitMQConfig {
 ```
 
 If you want to write everything in pure Java, just new all instances represented by each function.
-Here I have defined the ConnectionFactory to set up the connection between my application and the RabbitMQ server. Two exchanges are declared here, one for sending messages and one for receiving messages (the exchanges can be defined on both provider and consumer side, it would be safer to define them on both sides). A queue and its corresponding binding are also declared to receive messages (the same declaration policy as exchanges can be applied here). In the last part, a container and a listener are declared to define the logic for processing messages when they arrive. 
+Here I have defined the ConnectionFactory to set up the connection between my application and the RabbitMQ server. Two exchanges are declared here, one for sending messages and one for receiving messages (the exchanges can be defined on both provider and consumer side, it would be safer to define them on both sides). A queue and its corresponding binding are also declared to receive messages (the same declaration policy as exchanges can be applied here). In the last part, a container and a listener are declared to define the logic for processing messages when they arrive, the processing function specified in the declaration of the listener. 
 
 Let’s see the code on the python side. 
 It is almost the same as on the Java side. 
