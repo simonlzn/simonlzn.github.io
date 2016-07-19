@@ -11,16 +11,18 @@ RabbitMQ is a messaging broker. It passes along all messages sent by different c
 <h3>Context</h3>
 The project shown in this article is written within the Spring framework on the Java side and pika for implementation of the AMPQ protocol (RabbitMQ uses AMPQ as the messaging protocol) on the python side. 
 
-Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the “Messaging Setup” section.
+Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section.
 
 <h3>Web Application Setup</h3>
-Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is almost the same as the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
+Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is similar with the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
 
 ``` gradle run ```
 
 After this step, you should be able to see “hello” on the page, when you type in http://localhost:8080/home
 
-<h3>Messaging Setup</h3>
+The project can also be deployed as a normal war file in tomcat. you can run  ``` gradle build ``` and find the war file in the /build/libs folder (the sample project has a already built war file in this folder). Just be aware of the url (you should use http://localhost:8080/{the-name-of-your-war-file}/home) if you deploy the war file.
+
+<h3 id="main_content">Messaging Setup</h3>
 Since I am using Spring as the IoC container, so the code looks like this.
 
 ``` java
@@ -158,5 +160,5 @@ class Sender(object):
 ```
 
 <h3>Run it</h3>
-Now let’s run both the Java application and python application and see how they communicate with each other.
-
+Now let’s run both Java application and python application and see how they communicate with each other.
+<img src="/images/post/java_python_comm.png"></img>
