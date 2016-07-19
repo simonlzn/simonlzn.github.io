@@ -118,21 +118,21 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
 channel = connection.channel()
 
-channel.queue_declare(queue='queue3')
+channel.queue_declare(queue='queue2')
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
     data = json.loads(body)
-    print data["func"]
-    print data["abc"]
-    time.sleep(5)
+    print data
+    time.sleep(1)
     sender = Sender()
-    sender.send()
+    sender.send(body)
 
+channel.queue_bind(exchange='python', queue="queue2", routing_key='#')
 channel.basic_consume(callback,
-                      queue='queue3',
+                      queue='queue2',
                       no_ack=True)
 
 channel.start_consuming()
@@ -148,7 +148,7 @@ import pika
 
 class Sender(object):
 
-    def send(self):
+    def send(self, str):
 	connection = pika.BlockingConnection(pika.ConnectionParameters(
         	host='localhost'))
 	channel = connection.channel()
@@ -156,9 +156,9 @@ class Sender(object):
 
 	channel.queue_declare(queue='queue1')
 
-	channel.basic_publish(exchange='',
+	channel.basic_publish(exchange='java',
         	              routing_key='queue1',
-                	      body='test from python')
+                	      body='msg from python : echo ' + str)
 	print(" [x] Sent 'test'")
 	connection.close()
 ```
