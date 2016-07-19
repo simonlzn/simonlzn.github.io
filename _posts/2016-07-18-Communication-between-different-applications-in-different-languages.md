@@ -167,5 +167,7 @@ Open the main page and then type in any message you want to send to the python s
 <div>
     <img src="/images/post/java_python_comm.png" />
 </div>
-Please check out the code for more details. <a href="https://github.com/simonlzn/SpringWithRabbitMQ">Java code</a>&nbsp; &nbsp; &nbsp; <a href="https://github.com/simonlzn/PythonRabbitMQTest">Python code</a>
+Please check out the code for more details. 
+<a href="https://github.com/simonlzn/SpringWithRabbitMQ">Java code</a>  <a href="https://github.com/simonlzn/PythonRabbitMQTest">Python code</a>
+
 In the Java code, the main part of the communication is in the message folder, I added a PubSub for better showing messages in the Web, if you only want to send and receive messages, the code in that folder should be enough.
