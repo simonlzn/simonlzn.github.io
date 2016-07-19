@@ -13,7 +13,7 @@ The project shown in this article is written within the Spring framework on the 
 
 Since we need to use the RabbitMQ server to pass the messages around. Please download the RabbitMQ server <a href="https://www.rabbitmq.com/download.html">here</a>. Start the server by running the rabbitmq-server in the sbin folder.
 
-Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section.
+Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section. The project is built with the tool [Link](https://gradle.org/) gradle, just download it and set the executable file in the environmental path.
 
 <h3>Web Application Setup</h3>
 Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is similar with the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
@@ -28,72 +28,74 @@ The project can also be deployed as a normal war file in tomcat. you can run  ``
 Since I am using Spring as the IoC container, so the code looks like this.
 
 ``` java
- @Configuration
- @ComponentScan("")
- public class RabbitMQConfig {
-     private String queueName = "queue." + UUID.randomUUID().toString().replace("-","");
-     @Bean
-     public ConnectionFactory connectionFactory() {
-         CachingConnectionFactory connectionFactory =
-             new CachingConnectionFactory();
-         connectionFactory.setHost("localhost");
-         connectionFactory.setUsername("guest");
-         connectionFactory.setPassword("guest");
-         return connectionFactory;
-     }
- 
-     @Bean
-     public AmqpAdmin amqpAdmin(TopicExchange topicExchange, FanoutExchange fanoutExchange, Queue queue, Binding binding) {
-         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
-         rabbitAdmin.setAutoStartup(false);
-         rabbitAdmin.declareQueue(queue);
-         rabbitAdmin.declareExchange(topicExchange);
-         rabbitAdmin.declareExchange(fanoutExchange);
-         rabbitAdmin.declareBinding(binding);
-         return rabbitAdmin;
-     }
- 
-     @Bean
-     public Binding binding() {
-         return new Binding(queueName, Binding.DestinationType.QUEUE, "java", "queue1",null);
-     }
- 
-     @Bean
-     public Queue queue(){
-         return new Queue(queueName, false, true, false);
-     }
- 
-     @Bean
-     public TopicExchange topicExchange(){
-         return new TopicExchange("python");
-     }
- 
-     @Bean FanoutExchange fanoutExchange(){
-         return new FanoutExchange("java");
-     }
+@Configuration
+@ComponentScan("")
+public class RabbitMQConfig {
+    private String queueName = "queue." + UUID.randomUUID().toString().replace("-","");
+    
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        CachingConnectionFactory connectionFactory =
+            new CachingConnectionFactory();
+        connectionFactory.setHost("localhost");
+        connectionFactory.setUsername("guest");
+        connectionFactory.setPassword("guest");
+        return connectionFactory;
+    }
+      
+    @Bean
+    public AmqpAdmin amqpAdmin(TopicExchange topicExchange, FanoutExchange fanoutExchange, Queue queue, Binding binding) {
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
+        rabbitAdmin.setAutoStartup(false);
+        rabbitAdmin.declareQueue(queue);
+        rabbitAdmin.declareExchange(topicExchange);
+        rabbitAdmin.declareExchange(fanoutExchange);
+        rabbitAdmin.declareBinding(binding);
+        return rabbitAdmin;
+    }
+    
+    @Bean
+    public Binding binding() {
+        return new Binding(queueName, Binding.DestinationType.QUEUE, "java", "queue1",null);
+    }
+    
+    @Bean
+    public Queue queue(){
+        return new Queue(queueName, false, true, false);
+    }
+    
+    @Bean
+    public TopicExchange topicExchange(){
+        return new TopicExchange("python");
+    }
+    
+    @Bean 
+    FanoutExchange fanoutExchange(){
+        return new FanoutExchange("java");
+    }
+    
+    @Bean
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
+        return rabbitTemplate;
+    }
 
-     @Bean
-     public RabbitTemplate rabbitTemplate() {
-         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-         return rabbitTemplate;
-     }
- 
-     @Bean
+    @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, RabbitAdmin rabbitAdmin) throws IOException {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-         container.setMissingQueuesFatal(false);
-         container.setRabbitAdmin(rabbitAdmin);
+        container.setMissingQueuesFatal(false);
+        container.setRabbitAdmin(rabbitAdmin);
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(queueName);
         container.setMessageListener(listenerAdapter);
         return container;
     }
- 
+
     @Bean
     MessageListenerAdapter listenerAdapter(MessageQueue messageQueue) {
-         return new MessageListenerAdapter(messageQueue, "Recv");
+        return new MessageListenerAdapter(messageQueue, "Recv");
     }
- }
+}
 ```
 
 If you want to write everything in pure Java, just new all instances represented by each function.
