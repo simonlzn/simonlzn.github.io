@@ -22,7 +22,7 @@ Here I chose Spring Boot to build a simple stand-alone application to provide th
 
 After this step, you should be able to see “hello” on the page, when you type in http://localhost:8080/home
 
-The project can also be deployed as a normal war file in tomcat. you can run  ``` gradle build ``` and find the war file in the /build/libs folder (the sample project has a already built war file in this folder). Just be aware of the url (you should use http://localhost:8080/{the-name-of-your-war-file}/home) if you deploy the war file.
+The project can also be deployed as a normal war file in tomcat. you can run  ``` gradle build ``` and find the war file in the /build/libs folder (the sample project has an already built war file in this folder). Just be aware of the url (you should use http://localhost:8080/{the-name-of-your-war-file}/home) if you deploy the war file instead of running it as a stand-alone application.
 
 <h3 id="main_content">Messaging Setup</h3>
 Since I am using Spring as the IoC container, so the code looks like this.
