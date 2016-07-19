@@ -13,7 +13,7 @@ The project shown in this article is written within the Spring framework on the 
 
 Since we need to use the RabbitMQ server to pass the messages around. Please download the RabbitMQ server <a href="https://www.rabbitmq.com/download.html">here</a>. Start the server by running the rabbitmq-server in the sbin folder.
 
-Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section. The project is built with the tool [Link](https://gradle.org/) gradle, just download it and set the executable file in the environmental path.
+Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section. The project is built with the tool [gradle](https://gradle.org/), just download it and set the executable file in the environmental path.
 
 <h3>Web Application Setup</h3>
 Here I chose Spring Boot to build a simple stand-alone application to provide the UI for the communication. The code is similar with the sample code in <a href="http://spring.io/guides/gs/serving-web-content/">Spring Boot</a>. Clone the code from <a href="https://github.com/simonlzn/SpringWithGradle">here</a> and input the following command to run it. 
