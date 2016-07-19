@@ -11,6 +11,8 @@ RabbitMQ is a messaging broker. It passes along all messages sent by different c
 <h3>Context</h3>
 The project shown in this article is written within the Spring framework on the Java side and pika for implementation of the AMPQ protocol (RabbitMQ uses AMPQ as the messaging protocol) on the python side. 
 
+Since we need to use the RabbitMQ server to pass the messages around. Please download the RabbitMQ server <a href="https://www.rabbitmq.com/download.html">here</a>. Start the server by running the rabbitmq-server in the sbin folder.
+
 Since the project was originally aimed to offer the possibility to a web application based on Spring to talk to a python application, so I chose Spring Boot to set up the web server. If you are only interested in the communication between a Java application and a python application, please skip the next section and jump to the <a href="#main_content">“Messaging Setup”</a> section.
 
 <h3>Web Application Setup</h3>
@@ -26,72 +28,72 @@ The project can also be deployed as a normal war file in tomcat. you can run  ``
 Since I am using Spring as the IoC container, so the code looks like this.
 
 ``` java
-         @Configuration
-         @ComponentScan("")
-         public class RabbitMQConfig {
-             private String queueName = "queue." + UUID.randomUUID().toString().replace("-","");
-             @Bean
-             public ConnectionFactory connectionFactory() {
-                 CachingConnectionFactory connectionFactory =
-                     new CachingConnectionFactory();
-                 connectionFactory.setHost("localhost");
-                 connectionFactory.setUsername("guest");
-                 connectionFactory.setPassword("guest");
-                 return connectionFactory;
-             }
-         
-             @Bean
-             public AmqpAdmin amqpAdmin(TopicExchange topicExchange, FanoutExchange fanoutExchange, Queue queue, Binding binding) {
-                 RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
-                 rabbitAdmin.setAutoStartup(false);
-                 rabbitAdmin.declareQueue(queue);
-                 rabbitAdmin.declareExchange(topicExchange);
-                 rabbitAdmin.declareExchange(fanoutExchange);
-                 rabbitAdmin.declareBinding(binding);
-                 return rabbitAdmin;
-             }
-         
-             @Bean
-             public Binding binding() {
-                 return new Binding(queueName, Binding.DestinationType.QUEUE, "java", "queue1",null);
-             }
-         
-             @Bean
-             public Queue queue(){
-                 return new Queue(queueName, false, true, false);
-             }
-         
-             @Bean
-             public TopicExchange topicExchange(){
-                 return new TopicExchange("python");
-             }
-         
-             @Bean FanoutExchange fanoutExchange(){
-                 return new FanoutExchange("java");
-             }
-    
-             @Bean
-             public RabbitTemplate rabbitTemplate() {
-                 RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-                 return rabbitTemplate;
-             }
-         
-             @Bean
-         	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, RabbitAdmin rabbitAdmin) throws IOException {
-         		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-                 container.setMissingQueuesFatal(false);
-                 container.setRabbitAdmin(rabbitAdmin);
-         		container.setConnectionFactory(connectionFactory);
-         		container.setQueueNames(queueName);
-         		container.setMessageListener(listenerAdapter);
-         		return container;
-         	}
-         
-         	@Bean
-         	MessageListenerAdapter listenerAdapter(MessageQueue messageQueue) {
-                 return new MessageListenerAdapter(messageQueue, "Recv");
-         	}
-         }
+ @Configuration
+ @ComponentScan("")
+ public class RabbitMQConfig {
+     private String queueName = "queue." + UUID.randomUUID().toString().replace("-","");
+     @Bean
+     public ConnectionFactory connectionFactory() {
+         CachingConnectionFactory connectionFactory =
+             new CachingConnectionFactory();
+         connectionFactory.setHost("localhost");
+         connectionFactory.setUsername("guest");
+         connectionFactory.setPassword("guest");
+         return connectionFactory;
+     }
+ 
+     @Bean
+     public AmqpAdmin amqpAdmin(TopicExchange topicExchange, FanoutExchange fanoutExchange, Queue queue, Binding binding) {
+         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
+         rabbitAdmin.setAutoStartup(false);
+         rabbitAdmin.declareQueue(queue);
+         rabbitAdmin.declareExchange(topicExchange);
+         rabbitAdmin.declareExchange(fanoutExchange);
+         rabbitAdmin.declareBinding(binding);
+         return rabbitAdmin;
+     }
+ 
+     @Bean
+     public Binding binding() {
+         return new Binding(queueName, Binding.DestinationType.QUEUE, "java", "queue1",null);
+     }
+ 
+     @Bean
+     public Queue queue(){
+         return new Queue(queueName, false, true, false);
+     }
+ 
+     @Bean
+     public TopicExchange topicExchange(){
+         return new TopicExchange("python");
+     }
+ 
+     @Bean FanoutExchange fanoutExchange(){
+         return new FanoutExchange("java");
+     }
+
+     @Bean
+     public RabbitTemplate rabbitTemplate() {
+         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
+         return rabbitTemplate;
+     }
+ 
+     @Bean
+    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, RabbitAdmin rabbitAdmin) throws IOException {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+         container.setMissingQueuesFatal(false);
+         container.setRabbitAdmin(rabbitAdmin);
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queueName);
+        container.setMessageListener(listenerAdapter);
+        return container;
+    }
+ 
+    @Bean
+    MessageListenerAdapter listenerAdapter(MessageQueue messageQueue) {
+         return new MessageListenerAdapter(messageQueue, "Recv");
+    }
+ }
 ```
 
 If you want to write everything in pure Java, just new all instances represented by each function.
@@ -161,4 +163,9 @@ class Sender(object):
 
 <h3>Run it</h3>
 Now let’s run both Java application and python application and see how they communicate with each other.
-<img src="/images/post/java_python_comm.png"></img>
+Open the main page and then type in any message you want to send to the python side. After 1 second, the python will send an echo with the same message back.
+<div>
+    <img src="/images/post/java_python_comm.png" />
+</div>
+Please check out the code for more details. <a href="https://github.com/simonlzn/SpringWithRabbitMQ">Java code</a>&nbsp; &nbsp; &nbsp; <a href="https://github.com/simonlzn/PythonRabbitMQTest">Python code</a>
+In the Java code, the main part of the communication is in the message folder, I added a PubSub for better showing messages in the Web, if you only want to send and receive messages, the code in that folder should be enough.
