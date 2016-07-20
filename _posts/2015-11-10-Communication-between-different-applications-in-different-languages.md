@@ -83,8 +83,8 @@ public class RabbitMQConfig {
     @Bean
 	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, RabbitAdmin rabbitAdmin) throws IOException {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setMissingQueuesFatal(false);
-        container.setRabbitAdmin(rabbitAdmin);
+		container.setMissingQueuesFatal(false);
+		container.setRabbitAdmin(rabbitAdmin);
 		container.setConnectionFactory(connectionFactory);
 		container.setQueueNames(queueName);
 		container.setMessageListener(listenerAdapter);
