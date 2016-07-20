@@ -96,3 +96,7 @@ In these ways, dependencies can be organized by the framework you use, you only 
 
 We have tried both approaches. There is one hint to mention here. The common JS modules is generally not supported by browsers directly, we have used the browserify plugin in Grunt to solve this issue. Since all CJS modules can be merged into one file for every page, the number of requests for each page can be reduced to the minimum.
 
+<h3>Test</h3>
+We had used [Selenium](http://docs.seleniumhq.org/) as the testing framework. It is well supported with C#(although the framework was originally designed for the Java world). In the new projects, we have tried the testing tool [CasperJS](http://casperjs.org/) based on the [PhantomJS](http://phantomjs.org/) framework.
+ 
+The main advantage of the CasperJS is that it is based on a headless browser, so it is much faster than Selenium. On the other hand, because of the nature of CasperJS, it is really hard to write and debug tests with a headless browser, when you are not that familiar with the whole test suite and its concept of the "evaluate" context.
