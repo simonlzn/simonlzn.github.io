@@ -7,10 +7,10 @@ Since a couple of months, many front-end technologies have been introduced into 
 
 <h3>HTML</h3>
 Since most of our users use Chrome and Firefox, so we moved completely to HTML5 (We added the shiv in the conditional comments for low version of IE just in case).
- - The new tags``` header footer article section``` were introduced to replace the old ```div```s. 
- - The DOCTYPE was changed to html.
- - HTML 5 validation was introduced to perform the front-end validation.
- - The old flash player was replaced by the ```<video>```tag
+ + The new tags``` header footer article section``` were introduced to replace the old ```div```s. 
+ + The DOCTYPE was changed to html.
+ + HTML 5 validation was introduced to perform the front-end validation.
+ + The old flash player was replaced by the ```<video>```tag
 
 <h3>CSS</h3>
 The concept "Mobile First" was applied during the whole process of the design. The layout for the mobile devices is designed first, using media query to add "exceptions" for a bigger view port. View ports are categorized into $phone, $tablet, $desktop which correspond to 480px, 768px and 1024px.  
