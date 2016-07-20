@@ -1,3 +1,8 @@
+---
+layout: post
+title: "Front-end technologies used in current projects"
+date: 2015-08-07
+---
 Since a couple of months, many front-end technologies have been introduced into our projects. Here I want to summarize some of major changes we did in the past year.
 
 <h3>HTML</h3>
