@@ -102,6 +102,7 @@ In these ways, dependencies can be organized by the framework you use, you only 
 The following is some sample code of the two frameworks,
 
 AMD
+
 ``` javascript
 define('sampleModule', ['dep1', 'dep2'], function (dep1, dep2) {
     return function () {};
@@ -109,6 +110,7 @@ define('sampleModule', ['dep1', 'dep2'], function (dep1, dep2) {
 ```
 
 CJS
+
 ``` javascript
 var dep1 = require('dep1');
 var dep2 = require('dep2');
