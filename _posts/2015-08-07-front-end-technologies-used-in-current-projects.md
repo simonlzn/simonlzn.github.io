@@ -18,6 +18,8 @@ The concept "Mobile First" was applied during the whole process of the design. T
 
 The grid system was implemented with the [**susy**]()  framework. All CSS were re-written in scss. ```Mixin```s and ```Extend```s were used to define elements in different sizes. For example, buttons in different sizes are defined as follows,
 
+@Mixin
+
 ``` css
 @mixin btn ($size : M, $type : Bob){
     display:inline-block;
@@ -49,6 +51,8 @@ The grid system was implemented with the [**susy**]()  framework. All CSS were r
     @include btn(S, Kate);
 }
 ```
+
+@Extend
 
 ``` css
 .message {
@@ -94,6 +98,22 @@ With the help of the plugin [grunt-svgstore](https://github.com/FWeinb/grunt-svg
 Generally, there are two popular ways to organize JS modules, one way is AMD( [requireJS](http://www.requirejs.org/) ) and the other way is CJS( [commonJS](http://www.commonjs.org/) ). The main difference between these two approaches is that AMD loads scripts asynchronously. It is hard to say which one is better, although CJS is more preferred on the server side, so basically on NodeJS server and AMD is often used on the browser side.
 
 In these ways, dependencies can be organized by the framework you use, you only need to focus on the actual functionality in your current module, all relevant modules are injected either as parameters or instantiated via require() function. 
+
+The following is some sample code of the two frameworks,
+
+AMD
+``` javascript
+define('sampleModule', ['dep1', 'dep2'], function (dep1, dep2) {
+    return function () {};
+});
+```
+
+CJS
+``` javascript
+var dep1 = require('dep1');
+var dep2 = require('dep2');
+exports.foo = function () {};
+```
 
 We have tried both approaches. There is one hint to mention here. The common JS modules is generally not supported by browsers directly, we have used the browserify plugin in Grunt to solve this issue. Since all CJS modules can be merged into one file for every page, the number of requests for each page can be reduced to the minimum.
 
