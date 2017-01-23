@@ -10,7 +10,7 @@ Traditional medical image viewers are either CS based or running on a single mac
 The intuitive way of displaying images on web is to transfer images in JPG, PNG format, it is naturally supported by browsers and can be easily cached. However, this is not so efficient for displaying medical images. For images like CT, usually they are displayed in 3 planes, a.k.a. transverse, sagittal and coronal views. The most often used way to display such images is to display the YUV values, because they are more easily manipulated via some image processing algorithm. So in my application, I have set up a couple of REST APIs to return the data of the images for all 3 views. Here is an example response of such requests.
 
  ```
-    {"@id":"1", "row":512,"column":512,"rowspacing":0.5111907,"columnspacing":0.5111907, "data":"45,43,54,53,53,27,8,23,0,54,83,76,50,24,53,23,23,24,63,87,50,62,60.....","intercept":1000}
+    {"@id":"1", "row":512,"column":512,"rowspacing":0.5111907,"columnspacing":0.5111907, "data":"45,43,54,53,53,27,8,23,0,54,83,76,50,24,53,23,23,24,63,87,50,62,60.....", "intercept":1000}
  ```
 
 <h3>Speed up the image display</h3>
