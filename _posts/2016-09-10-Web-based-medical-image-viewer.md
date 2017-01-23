@@ -21,15 +21,66 @@ To solve the problem of the latency of the internet transmission, a common appro
 Let's then take one step further. Since the original CT only has the transverse view, the images for sagittal and coronal views are simply calculated by reconstructing the image volume and slicing the volume. In the traditional medical image viewer, this process is done with the help of some tools such as ITK. ITK provides features to easily convert original CT images(DICOM files) to a 3D volume and get the images for sagittal and coronal views. So an easy way to reduce the number of the requests would be, only request the data for the transverse view and then get the other two views locally, which will be introduced in the following sections.
 
 <h3>Reconstruct and slicing locally</h3>
-The idea of slicing the image volume locally is to create the functionality to simulate ITK in JS. ITK does a lot of work for reconstructing the image volume taking plenty of properties of the images into account. If we want to implement everything in JS, that will be quite complicate, but if we first pre-process the CT images and only consider the voxel value, that will be fairly easy. So in the pre-process step, all transverse images are retrieved from the server as an array of YUV values. Maintain a 3D array as a volume for a particular set of transverse images. As soon as the images for the other two views are displayed, fix one dimension of the image volume and get the data for the other two dimensions. This can easily be done with JS. Example code is like this,
+The idea of slicing the image volume locally is to create the functionality to simulate ITK in JS. ITK does a lot of work for reconstructing the image volume taking plenty of properties of the images into account. If we want to implement everything in JS, that will be quite complicate, but if we first pre-process the CT images and only consider the voxel value, that will be fairly easy. So in the pre-process step, all transverse images are retrieved from the server as an array of YUV values, then maintain a 3D array as a volume for a particular set of transverse images. As soon as the images for the other two views are displayed, fix one dimension of the 3D array and get the data for the other two dimensions. This can easily be done with JS. Example code is like this,
 
 ```
+    // construct the 3D array, namely the image volume
     var a = sliceImage.imagePixelData;
     var index = sliceImage.index;
     var width = sliceImage.width;
     for(var i = 1; i < a.length; i++){
         module.cache[index][parseInt(i/width)][i%width] = a[i];
     }
+    
+    // slice the volume, get one slice of image in one of the three views
+    module.slice = function (volume, type, index) {
+        switch (type){
+            case 'T':
+                var arr = new Array(volume[index-1].length * volume[index-1][0].length);
+
+                for (var i = 0; i< volume[index-1].length; i++){
+
+                    for(var j =0; j < volume[index-1][0].length; j++){
+                        arr[i * volume[index-1].length + j] = volume[index-1][i][j];
+                    }
+                }
+
+                return arr;
+
+            case 'S':
+                var arr = new Array(volume.length * volume[0].length);
+
+                for (var i = 0; i< volume.length; i++){
+
+                    for(var j =0; j < volume[0].length; j++){
+                        arr[(i) * volume[0].length + j] = volume[volume.length-i-1][j][index-1];
+                    }
+                }
+
+                return arr;
+
+            case 'C':
+                var arr = new Array(volume.length * volume[0][index-1].length);
+
+                for (var i = 0; i< volume.length; i++){
+
+                    for(var j =0; j < volume[0][index-1].length; j++){
+                        arr[ (volume.length-i-1)*volume[0][index-1].length + j] = volume[i][index-1][j];
+                    }
+                }
+
+                return arr;
+
+
+        }
+
+    };
+    
 ```
 
 In this way, major data of the images is already stored locally in the memory of the browser, then switching between images will be really fast, because the switching only means moving the index of the 3D array. In my experiment, the sliding over images can give a desktop application-like user experience.
+
+<h3>Conclusion</h3>
+In summary, medical image viewer can also be built with web, which means HTML can be easily used to build the UI and all kinds of web servers can be used to handle concurrent requests. Users don't need to install any applications, instead all they need is just a browser to open the viewer. 
+ 
+Although web based medical image viewer has these advantages, it also has drawbacks. In order to give users good user experience, the application needs to be customized and optimized for browsers. Images need to be pre-processed, the only data transmitted over internet will be the YUV values. This data should be set to be cache-enabled for the browser. On the browser side, as soon as getting all transverse images, a 3D array can be constructed as a stack of 2D images. It is used to store all the image data as an image volume. When an image on any view needs to be displayed, just fix one dimension of the 3D array and get the other two dimensions. 
