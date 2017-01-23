@@ -1,8 +1,0 @@
-Web based medical image viewer
-
-Traditional medical image viewers are either CS based or running on a single machine, but according to the recent work, I have found out the image viewer can also be implemented on web. This approach can exploit the benifit of web based applicaition, such as cross platform, easy to use(only via browser). Meanwhile, it also has some drawbacks. The major difficulties of a web based image viewer are the performance caused by the limited computation power of browser and latency of internet transmission. 
-
-The intuitive way of displaying images on web is to transfer images in JPG, PNG format, it is naturally supported by browsers and can be easily cached. However, this is not so efficient for displaying medical images. For images like CT, usually they are displayed in 3 planes, a.k.a. transverse, sagittal and coronal views. The most often used way is to display the YUV values, because they are more easily manipulated via some image processing algorithm. When images on the transverse view are ready, the images on other two views can be calculated by reconstructing the image volume and slice the volume, which will be introduced in the later sections.
-
-In the daily work, the physicians are likely to constantly scroll over images to find tumors, so instantly switching between images is one of the key points of the user experience.
-
