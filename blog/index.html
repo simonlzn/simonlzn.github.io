@@ -1,6 +1,6 @@
 ---
 layout: default
-title: simonlzn's Blog
+title: Simon's Blog
 ---
 	<h1>{{ page.title }}</h1>
 	<ul class="posts">
@@ -10,8 +10,9 @@ title: simonlzn's Blog
 			<p style="border-bottom: solid 1px black; padding: 5px;">
 				<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
 			</p>
-			<span>{{ post.date | date_to_string }}</span>
-			<
+			<p>
+				<span>{{ post.date | date_to_string }}</span>
+			</p>
 		</li>
 	  {% endfor %}
 	</ul>
