@@ -203,7 +203,6 @@ ul, ol, dl {
 ul {
   list-style-position: inside;
   list-style: disc;
-  padding-left: 20px;
 }
 
 li {
