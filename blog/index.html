@@ -7,7 +7,7 @@ title: Simon's Blog
 
 	  {% for post in site.posts %}
 	    <li>
-			<span style="padding-top:10px">{{ post.date | date_to_string }}</span>
+			<div style="padding-top:10px">{{ post.date | date_to_string }}</div>
 			<h3 style="margin:0;"><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
 			<div style="width: 100%; border-bottom: dotted 1px black; padding: 5px 0;"></div>
 		</li>
