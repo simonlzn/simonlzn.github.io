@@ -202,7 +202,7 @@ With the above filter, each authenticated request will validate the ticket with 
 <h3>Flow</h3>
 To sum up the whole process for the CAS system, the entire flow of the the users' authentication would be like this,
  
-<img src="/images/CAS_flow.jpg"></img>
+<img src="/images/CAS_flow.jpg">
 
 <h3>Conclusion</h3>
 In summary, CAS is a good choice for single sign-on approach. With Spring Security it is very easy to implement the CAS server and client. 
