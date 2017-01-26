@@ -53,6 +53,7 @@ My idea is to make use of the "remember-me" feature to simplify the CAS server. 
 ```
 
 After setting up the security config, we can customize the "remember-me" cookie settings by extending the *TokenBasedRememberMeServices* (There are also other ways to set up the "remember-me" cookie, please refer to the Spring Security manual)
+
 ```
     public class MyTokenBasedRememberMeServices extends
             TokenBasedRememberMeServices {
@@ -88,6 +89,7 @@ After setting up the security config, we can customize the "remember-me" cookie 
 After these two are set, the "remember-me" feature is enabled. 
 
 For the CAS server, another important feature is to check the TS sent by clients and return the authentication information if it is valid.
+
 ```
     @RestController
     @RequestMapping(value = "/authenticate")
@@ -142,8 +144,9 @@ Then we add our filter in the Spring Security filter chain.
 ```
 
 The filter itself should do just one thing, when there is a ST attached to the url in the request, it needs to validate this ticket with the CAS server to make sure this is valid ticket, otherwise just discard it. So the filter ends up with,
+
 ```java
-private class TicketFilter extends OncePerRequestFilter {
+    private class TicketFilter extends OncePerRequestFilter {
         @Override
         protected void doFilterInternal(HttpServletRequest request,
                                         HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
