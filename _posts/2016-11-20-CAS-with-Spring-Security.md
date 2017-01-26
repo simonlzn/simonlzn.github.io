@@ -31,7 +31,8 @@ My idea is to make use of the "remember-me" feature to simplify the CAS server. 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .logout().deleteCookies("JSESSIONID", "CASTGC") // "CASTGC" is the cookie name for TGT, which is the same as the "remember-me" cookie
+                    // "CASTGC" is the cookie name for TGT, which is the same as the "remember-me" cookie
+                    .logout().deleteCookies("JSESSIONID", "CASTGC") 
                     .invalidateHttpSession(true)
                 .and()        
                     .anyRequest().authenticated()
@@ -42,7 +43,8 @@ My idea is to make use of the "remember-me" feature to simplify the CAS server. 
                     .failureUrl("/login?error")        
                 .and()
                     .authenticationProvider(myAuthenticationProvider)
-                    .rememberMe().rememberMeCookieName("CASTGC").rememberMeServices(mySphicTokenBasedRememberMeServices) // Here set the "CASTGC" as the "remember-me" cookie name
+                    // Here set the "CASTGC" as the "remember-me" cookie name
+                    .rememberMe().rememberMeCookieName("CASTGC").rememberMeServices(mySphicTokenBasedRememberMeServices)
                     .tokenValiditySeconds(1209600)
                 .and()
                     .httpBasic();            
@@ -103,6 +105,7 @@ For the CAS server, another important feature is to check the TS sent by clients
         }
     }
 ```
+
 These are all the things we need to set up for CAS server, then we need to implement the CAS client for applications to authenticate users.
 
 <h4>Implement CAS client</h4>
@@ -117,7 +120,8 @@ Spring Security provides an interface *AuthenticationEntryPoint* to respond to t
         public void commence(HttpServletRequest request, HttpServletResponse response,
                              AuthenticationException exception) throws IOException, ServletException {
     
-            // add the current request url as a parameter of the redirection, so after the authentication, the CAS server can redirect the user back to this url
+            // add the current request url as a parameter of the redirection, so after the authentication, 
+            // the CAS server can redirect the user back to this url
             String redirectUrl = request.getRequestURL().toString();
             if (request.getQueryString() != null)
                 redirectUrl += "?" + request.getQueryString();
