@@ -4,7 +4,7 @@ body {
 
 article {
     padding : 20px;
-    margin : 30px;
+    margin : 0 30px;
     background-color: white;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
 
@@ -16,6 +16,8 @@ article {
     p {
         padding: 10px 0;
         color : black;
+        line-height: 27px;
+        font-size: 17px;
     }
     .post-content {
 
