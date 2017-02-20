@@ -1,5 +1,7 @@
 body {
-  background-color: #ededed; }
+  background-color: #ededed;
+  padding-top: 70px;
+  padding-bottom: 30px; }
 
 article {
   padding: 20px;
