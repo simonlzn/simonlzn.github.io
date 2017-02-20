@@ -24,4 +24,22 @@ article {
     background-color: #2aabd2;
     color: white; }
 
+  .about {
+    background-color: #ffffff;
+    padding: 40px 20px;
+  }
+.photo {
+  background-image: url(../images/photo.jpg);
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-position: -182px -38px;
+  background-size: 155%;
+  border: #ededed solid 1px;
+}
+
+.section {
+  padding : 20px;
+  border-top: 1px solid #ededed;
+}
 /*# sourceMappingURL=main.css.map */
