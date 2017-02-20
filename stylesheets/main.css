@@ -1,0 +1,22 @@
+body {
+  background-color: #ededed; }
+
+article {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05); }
+  article h3 {
+    color: #2aabd2; }
+  article p {
+    padding: 10px 0;
+    color: black; }
+  article a, article a:visited, article a:hover {
+    text-decoration: none; }
+  article .btn {
+    border-color: #2aabd2;
+    color: #2aabd2; }
+  article .btn:hover {
+    background-color: #2aabd2;
+    color: white; }
+
+/*# sourceMappingURL=main.css.map */

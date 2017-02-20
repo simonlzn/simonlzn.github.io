@@ -1,9 +1,20 @@
 ---
 layout: default
-title: Index
+title: Simon's Blog
 ---
-<p>My name is Zinan Lin. I am from China. I am interested in all Web related technology, including both front-end and back-end.</p>
+<h1>{{ page.title }}</h1>
 
-<p>Please check my blogs <a href="/blog/">here</a></p>
 
-<p>If you want to contact me, please write me an email simonlininter@yahoo.com.</p>
+{% for post in site.posts %}
+<article>
+    <a href="{{ post.url }}" class="center-block">
+        <h3>{{ post.title }}</h3>
+        <small>{{ post.date }}</small>
+        <p>{{ post.description }}</p>
+    </a>
+    <div>
+        <a class="btn btn-default center-block" href="#" role="button">Continue Reading</a>
+    </div>
+</article>
+{% endfor %}
+

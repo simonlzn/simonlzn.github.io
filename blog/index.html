@@ -3,13 +3,20 @@ layout: default
 title: Simon's Blog
 ---
 	<h1>{{ page.title }}</h1>
-	<ul class="posts">
+
 
 	  {% for post in site.posts %}
-	    <li>
+	    <article>
+			<div class="post-title">
+				<a href="{{ post.url }}" class="image-title"></a>
+			</div>
+			<div class="post-content">
+				<h3>{{ post.title }}</h3>
+				<p>{{ post.title }}</p>
+			</div>
 			<div style="padding-top:10px">{{ post.date | date_to_string }}</div>
 			<h3 style="margin:0;"><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
 			<div style="width: 100%; border-bottom: dotted 1px black; padding: 5px 0;"></div>
-		</li>
+		</article>
 	  {% endfor %}
-	</ul>
+

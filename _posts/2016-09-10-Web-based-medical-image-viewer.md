@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Web based medical image viewer"
+description : "Traditional medical image viewers are either CS based or running on a single machine, but according to the recent work, I have found out the image viewer can also be implemented on web. This approach can exploit the benefit of web based applications, such as cross platform, easy to use(only via browser). Meanwhile, it also has some drawbacks. The major difficulties of a web based image viewer are the performance issues caused by the limited computation power of the browser and the latency of internet transmission."
 date: 2016-09-10
 ---
 <h3>Overview</h3>
