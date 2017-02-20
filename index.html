@@ -17,5 +17,7 @@ title: Simon's Blog
 {% endfor %}
 
 <script language="text/javascript">
-    document.querySelector('[href="/index.html"]').parentElement.setAttribute("class", "active");
+    window.onload(function () {
+        document.querySelector('[href="/index.html"]').parentElement.setAttribute("class", "active");
+    });
 </script>
