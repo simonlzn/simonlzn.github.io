@@ -3,6 +3,7 @@ body {
 
 article {
   padding: 20px;
+  margin: 30px;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05); }
   article h3 {
