@@ -3,6 +3,7 @@ layout: post
 title: "Front-end technologies used in current projects"
 description : "Since a couple of months, many front-end technologies have been introduced into our projects. Here I want to summarize some of major changes we did in the past year." 
 date: 2015-08-07
+created: 2015-08-07
 ---
 Since a couple of months, many front-end technologies have been introduced into our projects. Here I want to summarize some of major changes we did in the past year.
 

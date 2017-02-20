@@ -3,6 +3,7 @@ layout: post
 title: "CAS with Spring Security for both server and client"
 description : "CAS(Central Authentication Service) is a good mechanism for having one single point of login to avoid duplicated authentications on different applications using the same credentials."
 date: 2016-11-20
+created: 2016-11-20
 ---
 <h3>Overview</h3>
 CAS(Central Authentication Service) is a good mechanism for having one single point of login to avoid duplicated authentications on different applications using the same credentials. 

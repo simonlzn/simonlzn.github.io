@@ -3,6 +3,7 @@ layout: post
 title: "Communication between different applications in different languages via Rabbit MQ"
 description : "In many scenarios, communication between applications in different languages are required. There are plenty of ways to solve this issue. For example, using Jython to compile the python code into JVM-compatible binary code, so that the code can be called by Java directly. Using messaging to communicate between applications is another way of doing “Remote Procedure Call” or simply pushing a message to the counterpart. Here I want to introduce how to send and receive messages between Java and python via RabbitMQ."
 date: 2015-11-10
+created: 2015-11-10
 ---
 In many scenarios, communication between applications in different languages are required. There are plenty of ways to solve this issue. For example, using Jython to compile the python code into JVM-compatible binary code, so that the code can be called by Java directly. Using messaging to communicate between applications is another way of doing “Remote Procedure Call” or simply pushing a message to the counterpart. Here I want to introduce how to send and receive messages between Java and python via RabbitMQ.
 
