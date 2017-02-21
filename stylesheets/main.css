@@ -36,6 +36,13 @@ article {
 .recent a p{
   color : #2aabd2;
 }
+
+.ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .about {
   background-color: #ffffff;
   padding: 40px 20px; }

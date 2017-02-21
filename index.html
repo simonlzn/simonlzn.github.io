@@ -18,11 +18,16 @@ title: Simon's Blog
     {% endfor %}
 </div>
 
-<div class="col-lg-5 recent">
+<div class="col-lg-3 recent">
+    <div class="center-block col-lg-12">
+        <div class="photo"></div>
+        <div><strong>Zinan Lin</strong></div>
+    </div>
+
     <p><strong>Recent articles</strong></p>
     {% for post in site.posts %}
     <a href="{{ post.url }}" class="center-block">
-    <p>{{ post.title }}</p>
+    <p class="ellipsis">{{ post.title }}</p>
         </a>
     {% endfor %}
 </div>
