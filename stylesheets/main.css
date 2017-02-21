@@ -42,18 +42,17 @@ article {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.photo {
+  background-image: url(../images/photo.jpg);
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-position: -182px -38px;
+  background-size: 155%;
+  border: #ededed solid 1px; }
 .about {
   background-color: #ffffff;
   padding: 40px 20px; }
-  .about .photo {
-    background-image: url(../images/photo.jpg);
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    background-position: -182px -38px;
-    background-size: 155%;
-    border: #ededed solid 1px; }
   .about .vertical-align {
     line-height: 80px; }
   .about .vertical-align-2 {
@@ -67,6 +66,7 @@ article {
 
 .section {
   padding: 20px;
-  border-top: 1px solid #ededed; }
+  border-top: 1px solid #ededed;
+  clear : both;}
 
 /*# sourceMappingURL=main.css.map */
