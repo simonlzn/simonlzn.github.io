@@ -19,7 +19,12 @@ title: Simon's Blog
 </div>
 
 <div class="col-lg-5">
-
+    <p><strong>Recent articles</strong></p>
+    {% for post in site.posts %}
+    <a href="{{ post.url }}" class="center-block">
+    <p>{{ post.title }}</p>
+        </a>
+    {% endfor %}
 </div>
 <script type="text/javascript">
     document.querySelector('li [href="/index.html"]').parentElement.setAttribute("class", "active");
