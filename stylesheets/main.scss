@@ -45,7 +45,14 @@ article {
     margin : 30px 0;
     background-color: white;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-    color : #2aabd2;
+
+    a, a:visited, a:hover {
+        text-decoration: none;
+
+        p {
+            color: #2aabd2;
+        }
+    }
 }
 
 .about {
