@@ -64,6 +64,13 @@ article {
     margin-left: 14px;
     margin-top: 6px; }
 
+.contact {
+  background-color: #ffffff;
+  padding: 40px 20px;
+}
+.contact span{
+  color: #2aabd2;
+}
 .section {
   padding: 20px;
   border-top: 1px solid #ededed;
