@@ -28,7 +28,10 @@ article {
     margin : 30px 0;
     background-color: white;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-    color : #2aabd2;
+
+  .recent a, .recent a:visited, .recent a:hover {
+    text-decoration: none;
+    color : #2aabd2; }
   }
 .about {
   background-color: #ffffff;
