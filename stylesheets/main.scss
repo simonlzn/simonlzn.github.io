@@ -40,6 +40,27 @@ article {
     }
 }
 
+.recent {
+    padding : 20px;
+    margin : 30px 0;
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+
+    a, a:visited, a:hover {
+        text-decoration: none;
+
+        p {
+            color: #2aabd2;
+        }
+    }
+}
+
+.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .about {
     background-color: #ffffff;
     padding: 40px 20px;
@@ -57,6 +78,10 @@ article {
         line-height: 80px;
     }
 
+    .vertical-align-2 {
+        line-height: 40px;
+    }
+
     .freiburg {
         width : 80px;
     }
@@ -66,8 +91,17 @@ article {
     }
 }
 
+.contact {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    span{
+        color: #2aabd2;
+    }
+}
+
 .section {
     padding : 20px;
     border-top: 1px solid #ededed;
+    clear: both;
 }
 

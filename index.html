@@ -18,8 +18,19 @@ title: Simon's Blog
     {% endfor %}
 </div>
 
-<div class="col-lg-5">
+<div class="col-lg-3 recent">
+    <div class="center-block col-lg-12 clearfix">
+        <div class="photo center-block"></div>
+        <div style="padding:20px; text-align: center"><strong>Zinan Lin</strong></div>
+    </div>
 
+    <div class="section"></div>
+    <p><strong>Recent articles</strong></p>
+    {% for post in site.posts %}
+    <a href="{{ post.url }}" class="center-block">
+    <p class="ellipsis">{{ post.title }}</p>
+        </a>
+    {% endfor %}
 </div>
 <script type="text/javascript">
     document.querySelector('li [href="/index.html"]').parentElement.setAttribute("class", "active");
