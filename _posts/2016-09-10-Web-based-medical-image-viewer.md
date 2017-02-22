@@ -12,7 +12,7 @@ Traditional medical image viewers are either CS based or running on a single mac
 The intuitive way of displaying images on web is to transfer images in JPG, PNG format, it is naturally supported by browsers and can be easily cached. However, this is not so efficient for displaying medical images. For images like CT, usually they are displayed in 3 planes, a.k.a. transverse, sagittal and coronal views. The most often used way to display such images is to display the YUV values, because they are more easily manipulated via some image processing algorithm. So in my application, I have set up a couple of REST APIs to return the data of the images for all 3 views. Here is an example response of such requests.
 
  ```
-    {"@id":"1", "row":512,"column":512,"rowspacing":0.5111907,"columnspacing":0.5111907, "data":"45,43,54,53,53,27,8,23,0,54,83,76,50,24,53,23,23,24,63,87,50,62,60.....", "intercept":1000}
+ {"@id":"1", "row":512,"column":512,"rowspacing":0.5111907,"columnspacing":0.5111907, "data":"45,43,54,53,53,27,8,23,0,54,83,76,50,24,53,23,23,24,63,87,50,62,60.....", "intercept":1000}
  ```
 
 <h3>Speed up the image display</h3>
@@ -26,57 +26,57 @@ Let's then take one step further. Since the original CT only has the transverse 
 The idea of slicing the image volume locally is to create the functionality to simulate ITK in JS. ITK does a lot of work for reconstructing the image volume taking plenty of properties of the images into account. If we want to implement everything in JS, that will be quite complicate, but if we first pre-process the CT images and only consider the voxel value, that will be fairly easy. So in the pre-process step, all transverse images are retrieved from the server as an array of YUV values, then maintain a 3D array as a volume for a particular set of transverse images. As soon as the images for the other two views are displayed, fix one dimension of the 3D array and get the data for the other two dimensions. This can easily be done with JS. Example code is like this,
 
 ```
-    // construct the 3D array, namely the image volume
-    var a = sliceImage.imagePixelData;
-    var index = sliceImage.index;
-    var width = sliceImage.width;
-    for(var i = 1; i < a.length; i++){
-        module.cache[index][parseInt(i/width)][i%width] = a[i];
+// construct the 3D array, namely the image volume
+var a = sliceImage.imagePixelData;
+var index = sliceImage.index;
+var width = sliceImage.width;
+for(var i = 1; i < a.length; i++){
+    module.cache[index][parseInt(i/width)][i%width] = a[i];
+}
+
+// slice the volume, get one slice of image in one of the three views
+module.slice = function (volume, type, index) {
+    switch (type){
+        case 'T':
+            var arr = new Array(volume[index-1].length * volume[index-1][0].length);
+
+            for (var i = 0; i< volume[index-1].length; i++){
+
+                for(var j =0; j < volume[index-1][0].length; j++){
+                    arr[i * volume[index-1].length + j] = volume[index-1][i][j];
+                }
+            }
+
+            return arr;
+
+        case 'S':
+            var arr = new Array(volume.length * volume[0].length);
+
+            for (var i = 0; i< volume.length; i++){
+
+                for(var j =0; j < volume[0].length; j++){
+                    arr[(i) * volume[0].length + j] = volume[volume.length-i-1][j][index-1];
+                }
+            }
+
+            return arr;
+
+        case 'C':
+            var arr = new Array(volume.length * volume[0][index-1].length);
+
+            for (var i = 0; i< volume.length; i++){
+
+                for(var j =0; j < volume[0][index-1].length; j++){
+                    arr[ (volume.length-i-1)*volume[0][index-1].length + j] = volume[i][index-1][j];
+                }
+            }
+
+            return arr;
+
+
     }
-    
-    // slice the volume, get one slice of image in one of the three views
-    module.slice = function (volume, type, index) {
-        switch (type){
-            case 'T':
-                var arr = new Array(volume[index-1].length * volume[index-1][0].length);
 
-                for (var i = 0; i< volume[index-1].length; i++){
-
-                    for(var j =0; j < volume[index-1][0].length; j++){
-                        arr[i * volume[index-1].length + j] = volume[index-1][i][j];
-                    }
-                }
-
-                return arr;
-
-            case 'S':
-                var arr = new Array(volume.length * volume[0].length);
-
-                for (var i = 0; i< volume.length; i++){
-
-                    for(var j =0; j < volume[0].length; j++){
-                        arr[(i) * volume[0].length + j] = volume[volume.length-i-1][j][index-1];
-                    }
-                }
-
-                return arr;
-
-            case 'C':
-                var arr = new Array(volume.length * volume[0][index-1].length);
-
-                for (var i = 0; i< volume.length; i++){
-
-                    for(var j =0; j < volume[0][index-1].length; j++){
-                        arr[ (volume.length-i-1)*volume[0][index-1].length + j] = volume[i][index-1][j];
-                    }
-                }
-
-                return arr;
-
-
-        }
-
-    };
+};
     
 ```
 
