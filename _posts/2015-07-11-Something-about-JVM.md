@@ -30,8 +30,8 @@ Class Loader defines where to find the class files and how to resolve them to ge
 
 
 <h4>Runtime data area</h4>
-<img src="/images/jvm-1.png"></img>
-<img src="/images/jvm-2.png"></img>
+<img src="/images/jvm-1.gif" />
+<img src="/images/jvm-2.gif" />
 <figcaption>cite from http://www.artima.com</figcaption>
 
 The method area holds the class data at the runtime. Once the classes are loaded by the class loader, their data is stored in the memory managed by the JVM, which is the method area. 
