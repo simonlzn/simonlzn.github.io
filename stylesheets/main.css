@@ -3,6 +3,9 @@ body {
   padding-top: 70px;
   padding-bottom: 30px; }
 
+article:first-of-type {
+  margin: 0; }
+
 article {
   padding: 20px;
   margin: 30px 0;
@@ -23,36 +26,32 @@ article {
   article .btn:hover {
     background-color: #2aabd2;
     color: white; }
-  .recent {
-    padding : 20px;
-    margin : 30px 0;
-    background-color: white;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-  }
-.recent a, .recent a:visited, .recent a:hover {
-  text-decoration: none;
-  }
 
-.recent a p{
-  color : #2aabd2;
-}
+.recent {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05); }
+  .recent a, .recent a:visited, .recent a:hover {
+    text-decoration: none; }
+    .recent a p, .recent a:visited p, .recent a:hover p {
+      color: #2aabd2; }
 
-.ellipsis{
+.ellipsis {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-.photo {
-  background-image: url(../images/photo.jpg);
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  background-position: -182px -38px;
-  background-size: 155%;
-  border: #ededed solid 1px; }
+  text-overflow: ellipsis; }
+
 .about {
   background-color: #ffffff;
   padding: 40px 20px; }
+  .about .photo {
+    background-image: url(../images/photo.jpg);
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background-position: -182px -38px;
+    background-size: 155%;
+    border: #ededed solid 1px; }
   .about .vertical-align {
     line-height: 80px; }
   .about .vertical-align-2 {
@@ -66,14 +65,11 @@ article {
 
 .contact {
   background-color: #ffffff;
-  padding: 40px 20px;
-}
-.contact span{
-  color: #2aabd2;
-}
+  padding: 40px 20px; }
+  .contact span {
+    color: #2aabd2; }
+
 .section {
   padding: 20px;
   border-top: 1px solid #ededed;
-  clear : both;}
-
-/*# sourceMappingURL=main.css.map */
+  clear: both; }
