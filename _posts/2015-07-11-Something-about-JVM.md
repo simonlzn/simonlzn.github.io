@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Something about JVM"
-description : "As a developer, you must have heard of JVM even though you might not be a Java dev. Whenever you start with a Java related "hello world", the first thing you are asked to do is to install the JDK or JRE. You may wonder the relationship between these concepts or what exactly is JVM, why it is necessary for Java, what do we need to do with it when we develop a Java application. This article will answer all these questions." 
+description : "As a developer, you must have heard of JVM even though you might not be a Java dev. Whenever you start with a Java related "hello world", the first thing you are asked to do is to install the JDK or JRE. You may wonder the relationship between these concepts or what exactly is JVM..." 
 date: 2015-07-11
 created: 2015-07-11
 ---
