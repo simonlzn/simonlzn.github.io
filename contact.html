@@ -2,12 +2,22 @@
 layout: default
 title: Contact
 ---
-<div class="contact">
-<p>I am interested in side projects. Please contact me if you have interesting ideas and want to implement them.</p>
+<div class="col-lg-8">
+    <div class="contact">
+        <p>I am interested in side projects. Please contact me if you have interesting ideas and want to implement
+            them.</p>
 
-<p>Email : <span>zinan.lin@outlook.com</span></p>
+        <p>Email : <span>zinan.lin@outlook.com</span></p>
+    </div>
+</div>
+<div class="col-lg-4">
+    <canvas id="canvas" height="400" width="300" style="border-style: dotted">
+        Sorry, your browser does not support canvas.
+    </canvas>
 </div>
 
 <script type="text/javascript">
     document.querySelector('[href="/contact.html"]').parentElement.setAttribute("class", "active");
 </script>
+
+<script type="text/javascript" src="/javascripts/contact.js"></script>
