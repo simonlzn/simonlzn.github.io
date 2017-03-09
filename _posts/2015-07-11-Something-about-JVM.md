@@ -20,7 +20,7 @@ The major reason why Java is called a platform independent language is JVM. If y
 <h3>Internal components of JVM</h3>
 By far, we already know what JVM is and how it works while running a Java application. Let's dig a little deeper, take a look at the internal components of the JVM. Here I will take the HotSpot as an example to show the functionality of each component.
  
-<img src="/images/jvm.png"></img>
+<img src="/images/jvm.png" />
 <figcaption>cite from the official documents of HotSpot</figcaption>
 
 Here I want to give a brief introduction about some of the main components.
