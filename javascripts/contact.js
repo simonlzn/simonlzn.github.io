@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function spawnPoint() {
         var point = {};
+        point.xDirection = Math.random() * 2 > 1 ? -1 : 1;
+        point.yDirection = Math.random() * 2 > 1 ? -1 : 1;
         point.x = Math.floor((Math.random() * canvas.width) + 1);
         point.y = Math.floor((Math.random() * canvas.height) + 1);
         return point
