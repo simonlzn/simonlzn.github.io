@@ -19,9 +19,9 @@ The major reason why Java is called a platform independent language is JVM. If y
 
 <h3>Internal components of JVM</h3>
 By far, we already know what JVM is and how it works while running a Java application. Let's dig a little deeper, take a look at the internal components of the JVM. Here I will take the HotSpot as an example to show the functionality of each component.
- m
+
 <img src="/images/jvm.png" />
-<em>cite from the official documents of HotSpot</em>
+<p><em>cite from the official documents of HotSpot</em></p>
 
 Here I want to give a brief introduction about some of the main components.
 
@@ -33,7 +33,7 @@ Class Loader defines where to find the class files and how to resolve them to ge
 <h4>Runtime data area</h4>
 <img src="/images/jvm-1.gif" />
 <img src="/images/jvm-2.gif" />
-<em>cite from http://www.artima.com</em>
+<p><em>cite from http://www.artima.com</em></p>
 
 The method area holds the class data at the runtime. Once the classes are loaded by the class loader, their data is stored in the memory managed by the JVM, which is the method area. 
 The Java objects are stored on the heap. So when a <i>new</i> keyword is used to instantiate an object, the object will be created on the heap.
