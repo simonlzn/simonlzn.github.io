@@ -3,3 +3,4 @@ build/
 serve/
 .idea/
 .sass-cache/
+Gemfile*
